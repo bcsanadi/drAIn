@@ -31,7 +31,12 @@ def pick_model():
     """Prefer PRIMARY; if unavailable, fall back. Non-fatal errors still return a choice."""
     for m in (MODEL_PRIMARY, MODEL_FALLBACK):
         try:
-            client.responses.create(model=m, input=[{"role": "system", "content": "ok"}], max_output_tokens=1)
+            # Test with a simple chat completion
+            client.chat.completions.create(
+                model=m, 
+                messages=[{"role": "system", "content": "test"}], 
+                max_tokens=1
+            )
             print(f"✅ Using model: {m}")
             return m
         except Exception as e:
@@ -57,15 +62,25 @@ def chat():
     convo.append({"role": "user", "content": user_msg})
 
     try:
-        r = client.responses.create(model=MODEL, input=convo)
-        return jsonify({"reply": r.output_text})
+        response = client.chat.completions.create(
+            model=MODEL,
+            messages=convo,
+            max_tokens=150,
+            temperature=0.7
+        )
+        return jsonify({"reply": response.choices[0].message.content})
     except Exception as e:
         # If model gets rejected mid-run, try fallback once
         msg = str(e).lower()
         if MODEL != MODEL_FALLBACK and ("model_not_found" in msg or "does not exist" in msg):
             try:
-                r = client.responses.create(model=MODEL_FALLBACK, input=convo)
-                return jsonify({"reply": r.output_text})
+                response = client.chat.completions.create(
+                    model=MODEL_FALLBACK,
+                    messages=convo,
+                    max_tokens=150,
+                    temperature=0.7
+                )
+                return jsonify({"reply": response.choices[0].message.content})
             except Exception as e2:
                 print("Error (fallback):", e2)
                 return jsonify({"reply": f"Error: {str(e2)}"}), 500
