@@ -25,7 +25,7 @@
                 <div class="options-grid">
                     <!-- Donate Card -->
                     <div class="option-card donate-card">
-                        <form method="POST" action="/refill/donate">
+                        <form method="POST" action="/refill">
                             <div class="card-content">
                                 <div class="card-icon">💧</div>
                                 <h3>Donate</h3>
@@ -52,15 +52,15 @@
                                 </div>
                                 
                                 <div class="confirmation-section">
-                                    <p class="confirmation-text">Did you make a donation?</p>
+                                    <h4>Did you make a donation?</h4>
                                     <div class="checkbox-group">
                                         <label class="checkbox-label">
-                                            <input type="radio" name="donated" value="yes" required>
+                                            <input type="radio" name="donated" value="yes">
                                             <span class="checkmark"></span>
                                             Yes, I donated!
                                         </label>
                                         <label class="checkbox-label">
-                                            <input type="radio" name="donated" value="no" required>
+                                            <input type="radio" name="donated" value="no">
                                             <span class="checkmark"></span>
                                             Not today
                                         </label>
@@ -77,7 +77,7 @@
 
                     <!-- Eco Actions Card -->
                     <div class="option-card eco-card">
-                        <form method="POST" action="/refill/eco">
+                        <form method="POST" action="/refill">
                             <div class="card-content">
                                 <h3>Personal Eco Actions</h3>
                                 <p>Track your water-saving actions and see how individual choices make a collective impact.</p>
@@ -137,7 +137,7 @@
 
                     <!-- Learn Card -->
                     <div class="option-card learn-card">
-                        <form method="POST" action="/refill/learn">
+                        <form method="POST" action="/refill">
                             <div class="card-content">
                                 <div class="card-icon">📚</div>
                                 <h3>Learn</h3>
@@ -164,6 +164,7 @@
                                 </div>
                                 
                                 <div class="learning-actions">
+                                    <h4>Mark your learning activities:</h4>
                                     <label class="action-item">
                                         <input type="checkbox" name="shared-knowledge" value="1">
                                         <span class="checkmark"></span>
