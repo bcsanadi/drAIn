@@ -21,6 +21,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
+    water_level = db.Column(db.Integer, default=50)  # Starting water level at 50%
     
     def set_password(self, password):
         """Hash and set the password"""
@@ -29,6 +30,16 @@ class User(db.Model):
     def check_password(self, password):
         """Check if the provided password matches the hash"""
         return check_password_hash(self.password_hash, password)
+    
+    def add_water(self, amount):
+        """Add water to user's level (max 100%)"""
+        self.water_level = min(100, self.water_level + amount)
+        db.session.commit()
+    
+    def use_water(self, amount):
+        """Remove water from user's level (min 0%)"""
+        self.water_level = max(0, self.water_level - amount)
+        db.session.commit()
     
     def __repr__(self):
         return f'<User {self.username}>'
@@ -69,11 +80,91 @@ def login():
 # Home page (after login)
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user = User.query.get(session['user_id'])
+    if user:
+        return render_template('home.html', water_level=user.water_level)
+    else:
+        return redirect(url_for('login'))
 
 # Refill page route
-@app.route('/refill')
+@app.route('/refill', methods=['GET', 'POST'])
 def refill():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        user = User.query.get(session['user_id'])
+        if not user:
+            return redirect(url_for('login'))
+        
+        total_water_saved = 0
+        refill_type = ""
+        
+        # Define water values for each eco action (in liters)
+        eco_action_values = {
+            'short-shower': 2,
+            'turn-off-water': 8,
+            'broom-cleaning': 50,
+            'full-loads': 30,
+            'fixed-leak': 100,
+            'scrape-dishes': 15
+        }
+        
+        # Check for eco actions
+        eco_actions_completed = []
+        for action, value in eco_action_values.items():
+            if request.form.get(action):
+                total_water_saved += value
+                eco_actions_completed.append(action.replace('-', ' ').title())
+        
+        # Check for donation
+        donated = request.form.get('donated')
+        if donated == 'yes':
+            total_water_saved += 25  # Donation adds 25L equivalent
+            refill_type = "donation and eco actions" if eco_actions_completed else "donation"
+        elif eco_actions_completed:
+            refill_type = "eco actions"
+        
+        # Check for learning actions
+        shared_knowledge = request.form.get('shared-knowledge')
+        read_article = request.form.get('read-article')
+        learning_bonus = 0
+        if shared_knowledge:
+            learning_bonus += 10
+        if read_article:
+            learning_bonus += 15
+        
+        if learning_bonus > 0:
+            total_water_saved += learning_bonus
+            if refill_type:
+                refill_type += " and learning"
+            else:
+                refill_type = "learning"
+        
+        # Convert liters to percentage (assuming 1L = 0.5% for game balance)
+        water_percentage_gain = int(total_water_saved * 0.5)
+        
+        if water_percentage_gain > 0:
+            old_level = user.water_level
+            user.add_water(water_percentage_gain)
+            new_level = user.water_level
+            
+            # Create success message
+            actions_text = f"You completed {len(eco_actions_completed)} eco actions" if eco_actions_completed else ""
+            if donated == 'yes':
+                actions_text += " and made a donation" if actions_text else "You made a donation"
+            if learning_bonus > 0:
+                actions_text += " and engaged with learning content" if actions_text else "You engaged with learning content"
+            
+            flash(f'Amazing! {actions_text}, saving {total_water_saved}L of water! Your water level increased from {old_level}% to {new_level}%.')
+        else:
+            flash('Please select at least one action to refill your water supply!')
+        
+        return redirect(url_for('home'))
+    
     return render_template('refill.html')
 
 # Deplete page route
@@ -144,9 +235,24 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    # Create database tables
+    # Create database tables and handle migrations
     with app.app_context():
+        # First, create all tables
         db.create_all()
-        print("Database tables created!")
+        
+        # Check if we need to add water_level column to existing users
+        try:
+            # Check if the column exists by trying to query it
+            result = db.engine.execute(db.text("SELECT water_level FROM user LIMIT 1"))
+            print("Water level column already exists!")
+        except Exception:
+            # Column doesn't exist, add it
+            try:
+                db.engine.execute(db.text("ALTER TABLE user ADD COLUMN water_level INTEGER DEFAULT 50"))
+                print("Added water_level column to existing users!")
+            except Exception as e:
+                print(f"Error adding column (might already exist): {e}")
+        
+        print("Database setup complete!")
     
     app.run(debug=True, host='0.0.0.0', port=5001)
