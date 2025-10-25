@@ -6,15 +6,30 @@
 }
 
 :root {
-  --primary-color: #c2e2ef;
+  --primary-color: #aaebf5;
   --secondary-color: #5ce1e6;
   --accent-color: #0097b2;
   --dark-blue: #003d52;
+  --sand-color: #cbac86;
   --font-family: 'Helvetica Neue', sans-serif;
   --title-font: 'TAN MERINGUE', 'Helvetica Neue', sans-serif;
   --font-size: 16px;
   --line-height: 1.5;
 }
+
+/* Title styling using custom font */
+.logo-text,
+h1,
+.site-title,
+.main-title,
+h1.title {
+  font-family: var(--title-font);
+}
+
+.tan-meringue-font {
+  font-family: var(--title-font);
+}
+
 
 .logo-text,
 h1,
@@ -35,6 +50,7 @@ h1.title {
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .nav-container {
@@ -74,6 +90,8 @@ h1.title {
 .nav-button2:hover {
   background-color: var(--dark-blue);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Body and general styling */
@@ -136,6 +154,8 @@ body {
 .get-started-button:hover {
   background-color: var(--dark-blue);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Main content area */
@@ -143,11 +163,149 @@ header {
   flex: 1;
 }
 
+/* Login page styling */
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.login-box {
+  background: linear-gradient(135deg, rgba(92, 225, 230, 0.8) 0%, rgba(167, 221, 243, 0.9) 50%, rgba(255, 255, 255, 0.95) 100%);
+  padding: 3.2rem 4rem;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  box-shadow: 0 8px 20px rgba(0, 151, 178, 0.3);
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: blob 8s ease-in-out infinite;
+  z-index: 10;
+}
+
+@keyframes blob {
+  0%, 100% { 
+    border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%;
+    transform: rotate(0deg);
+  }
+  25% { 
+    border-radius: 40% 60% 70% 30% / 60% 70% 30% 40%;
+    transform: rotate(2deg);
+  }
+  50% { 
+    border-radius: 80% 20% 60% 40% / 50% 80% 20% 70%;
+    transform: rotate(-2deg);
+  }
+  75% { 
+    border-radius: 50% 50% 80% 20% / 80% 30% 70% 20%;
+    transform: rotate(1deg);
+  }
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(-20px, -20px) rotate(0deg); }
+  50% { transform: translate(20px, 20px) rotate(180deg); }
+}
+
+.login-box h1 {
+  color: var(--dark-blue);
+  margin-bottom: 1.6rem;
+  font-size: 1.9rem;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.user-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+}
+
+.user-box input {
+  padding: 0.8rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 5px;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 256px;
+  max-width: 100%;
+}
+
+.user-box input:focus {
+  border-color: var(--dark-blue);
+}
+
+.user-box input::placeholder {
+  color: #999;
+}
+
+.user-box button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.65rem 1.9rem;
+  border: none;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.8rem;
+  width: 152px;
+  max-width: 100%;
+}
+
+.user-box button:hover {
+  background-color: var(--dark-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sign Up button styling (nav-button1) */
+.nav-button1 {
+  color: var(--dark-blue);
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-button1:hover {
+  background-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Footer Styling */
 footer {
-  background-color: var(--secondary-color);
+  background-color : var(--sand-color);
   padding: 1rem 0;
   margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .footer-content {
