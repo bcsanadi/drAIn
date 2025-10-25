@@ -103,6 +103,28 @@ h1.title {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Deplete button specific styling */
+.nav-button3 {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.nav-button3:hover {
+  background: linear-gradient(180deg, #731919, #dc2626);
+  border-color: #731919;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Body and general styling */
 html {
   background-color: white;
@@ -364,6 +386,27 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.refill-button {
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  background: linear-gradient(180deg, #226214, #28a745);
+  border-color: #226214;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.refill-button:hover {
+  background: linear-gradient(180deg, #226214, #28a745);
+  border-color: #226214;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Deplete button specific styling */
 .nav-button2 {
   background-color: var(--accent-color);
@@ -376,14 +419,6 @@ header {
   transition: all 0.3s ease;
   min-width: 80px;
   text-align: center;
-}
-
-.nav-button2:hover {
-  background: linear-gradient(180deg, #731919, #dc2626);
-  border-color: #731919;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Home page styling */
@@ -858,6 +893,94 @@ footer {
 
 .btn-icon {
   display: none; /* Hide emoji icons in buttons */
+}
+
+/* Descriptive Button Classes - Fixed Styling */
+
+/* Login button styling */
+.login-button {
+  color: var(--dark-blue);
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.login-button:hover {
+  background-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Signup button styling */
+.signup-button {
+  color: var(--dark-blue);
+  background-color: transparent;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.signup-button:hover {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Refill button styling */
+.refill-button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.refill-button:hover {
+  background: linear-gradient(180deg, #226214, #28a745);
+  border-color: #226214;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Deplete button styling */
+.deplete-button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.deplete-button:hover {
+  background: linear-gradient(180deg, #731919, #dc2626);
+  border-color: #731919;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive design for refill page */
