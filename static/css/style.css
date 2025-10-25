@@ -500,13 +500,17 @@ footer {
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: 500;
+  background: linear-gradient(135deg, rgba(160, 175, 251, 0.2), rgba(150, 246, 251, 0.299));
+  color: #c53030;
+  border: 2px solid #fed7d7;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
 }
 
 .success-alert {
-  background: linear-gradient(135deg, rgba(203, 172, 134, 0.2), rgba(212, 184, 150, 0.3));
+  background: linear-gradient(135deg, rgba(116, 153, 246, 0.2), rgba(134, 186, 249, 0.3));
   color: var(--dark-blue);
-  border: 2px solid var(--sand-color);
-  box-shadow: 0 4px 12px rgba(203, 172, 134, 0.3);
+  border: 2px solid var(--dark-blue);
+  box-shadow: 0 4px 12px rgba(134, 159, 203, 0.3);
 }
 
 /* ===== REFILL PAGE STYLING ===== */

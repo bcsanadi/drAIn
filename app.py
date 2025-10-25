@@ -194,7 +194,7 @@ def signup():
     # Validate input
     if not all([fullname, email, username, password]):
         flash('All fields are required!')
-        return redirect(url_for('index'))
+        return redirect(url_for('index') + '#signup-area')
     
     # Check if username or email already exists
     existing_user = User.query.filter(
@@ -206,7 +206,7 @@ def signup():
             flash('Username already exists! Please choose a different one.')
         else:
             flash('Email already registered! Please use a different email.')
-        return redirect(url_for('index'))
+        return redirect(url_for('index') + '#signup-area')
     
     # Create new user
     try:
