@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Water Refill Tracker</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+  button { margin: 5px; padding: 10px; }
+</style>
+</head>
+<body>
+<h2>Track Your Water Refills!</h2>
+
+<!-- Buttons for user actions -->
+<button onclick="updateAction('shower')">Take a Shorter Shower (+10)</button>
+<button onclick="updateAction('brush')">Turn Off Water While Brushing (+3)</button>
+<button onclick="updateAction('dishwasher')">Run Full Dishwasher/Laundry (+6)</button>
+<button onclick="updateAction('faucet')">Fix a Dripping Faucet (+1930)</button>
+<button onclick="updateAction('scrape')">Scrape Dishes Instead of Rinsing (+17)</button>
+
+<div id="chart" style="width:100%;height:500px;"></div>
+
+<script>
+  // Initialize or load user data from localStorage
+  let actions = ["Shorter shower", "Brushed teeth", "Dishwasher", "Faucet leak", "Scraped dishes"];
+  let actionKeys = ["shower", "brush", "dishwasher", "faucet", "scrape"];
+  let defaultValues = [10, 3, 6, 1930, 17];
+
+  let userData = JSON.parse(localStorage.getItem("waterProgress")) || defaultValues.slice();
+
+  // Function to update user's action
+  function updateAction(key) {
+    let index = actionKeys.indexOf(key);
+    if (index !== -1) {
+      userData[index] += defaultValues[index];  // increment by the action's value
+      localStorage.setItem("waterProgress", JSON.stringify(userData));
+      drawGraph();
+    }
+  }
+
+  // Function to draw graph
+  function drawGraph() {
+    let trace = {
+      x: actions,
+      y: userData,
+      type: 'bar',
+      marker: {color: '#cbac86'},
+      text: userData.map(String),
+      textposition: 'outside'
+    };
+    let layout = {
+      title: "Your AI Water Refills",
+      yaxis: {title: "Equivalent 100-Word AI Prompts Refilled", range: [0, Math.max(...userData)*1.1]},
+      margin: {t:50, b:150}
+    };
+    Plotly.newPlot('chart', [trace], layout, {responsive:true});
+  }
+
+  // Initial draw
+  drawGraph();
+</script>
+</body>
+</html>
