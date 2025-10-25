@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>drAIn - Your Progress</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  <!-- Navigation bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="/home" class="logo-text">drAIn</a>
+      <div class="nav-buttons">
+        <a href="/deplete" class="nav-button3">Deplete</a>
+        <a href="/refill" class="nav-button1">Refill</a>
+        <a href="/progress" class="progress-button">Progress</a>
+        <a href="/logout" class="nav-button2">Logout</a>
+      </div>
+    </div>    
+  </nav>
+
+  <!-- Progress content -->
+  <main style="flex: 1; padding: 2rem; background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);">
+    <div class="progress-container">
+      <h1 style="text-align: center; color: #2c5530; margin-bottom: 1rem;">Your Water Conservation Journey</h1>
+      
+      <!-- Current Status Card -->
+      <div class="status-card cool-water-card" style="background: linear-gradient(135deg, rgba(79, 195, 247, 0.1) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(92, 225, 230, 0.1) 100%); border-radius: 25px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(79, 195, 247, 0.3), 0 4px 16px rgba(0, 151, 178, 0.2); border: 2px solid rgba(79, 195, 247, 0.2); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%); animation: waterRipple 8s ease-in-out infinite; z-index: 0;"></div>
+        <h2 style="color: #2c5530; margin-bottom: 2rem; text-align: center; font-size: 1.8rem; text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8); position: relative; z-index: 2;">Your Current Water Level</h2>
+        <div class="water-level-display" style="text-align: center; position: relative; z-index: 2;">
+          <div class="level-circle-cool" style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(145deg, #e8f4f8, #d1ecf1); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: #2c5530; position: relative; overflow: hidden; box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(79, 195, 247, 0.3); border: 3px solid rgba(79, 195, 247, 0.4);">
+            <div class="water-fill" style="position: absolute; bottom: 0; width: 100%; height: {{ water_level }}%; background: linear-gradient(180deg, #4fc3f7 0%, #29b6f6 50%, #0288d1 100%); border-radius: 0 0 50% 50%; box-shadow: 0 -4px 8px rgba(79, 195, 247, 0.3);"></div>
+            
+            <!-- Animated Water Waves -->
+            <div class="water-wave water-wave-1" style="position: absolute; top: {{ 100 - water_level }}%; left: -50%; width: 200%; height: 20px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); border-radius: 50%; animation: waveFlow1 3s ease-in-out infinite; transform-origin: center;"></div>
+            <div class="water-wave water-wave-2" style="position: absolute; top: {{ 100 - water_level + 2 }}%; left: -50%; width: 200%; height: 15px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); border-radius: 50%; animation: waveFlow2 4s ease-in-out infinite reverse; transform-origin: center;"></div>
+            <div class="water-wave water-wave-3" style="position: absolute; top: {{ 100 - water_level - 1 }}%; left: -50%; width: 200%; height: 18px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); border-radius: 50%; animation: waveFlow3 2.5s ease-in-out infinite; transform-origin: center;"></div>
+            
+            <!-- Water Surface Reflection -->
+            <div class="water-surface-reflection" style="position: absolute; top: {{ 100 - water_level }}%; width: 100%; height: 8px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.8) 100%); animation: surfaceShimmer 2s ease-in-out infinite; border-radius: 50%;"></div>
+            
+            <!-- Floating Bubbles -->
+            <div class="bubble bubble-1" style="position: absolute; bottom: 10%; left: 20%; width: 6px; height: 6px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: bubbleFloat1 4s ease-in-out infinite;"></div>
+            <div class="bubble bubble-2" style="position: absolute; bottom: 20%; right: 25%; width: 4px; height: 4px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; animation: bubbleFloat2 3s ease-in-out infinite 1s;"></div>
+            <div class="bubble bubble-3" style="position: absolute; bottom: 15%; left: 70%; width: 5px; height: 5px; background: rgba(255, 255, 255, 0.7); border-radius: 50%; animation: bubbleFloat3 3.5s ease-in-out infinite 0.5s;"></div>
+            
+            <span class="percentage-text" style="position: relative; z-index: 10; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));">{{ water_level }}%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Container -->
+      <div class="charts-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+        
+        <!-- Actions Summary Chart -->
+        <div class="chart-card" style="background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+          <h3 style="color: #2c5530; margin-bottom: 1rem; text-align: center;">Your Completed Actions</h3>
+          <div id="actionsChart" style="width: 100%; height: 400px;"></div>
+        </div>
+
+        <!-- Water Level History Chart -->
+        <div class="chart-card" style="background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+          <h3 style="color: #2c5530; margin-bottom: 1rem; text-align: center;">Your Water Level Progress</h3>
+          <div id="historyChart" style="width: 100%; height: 400px;"></div>
+        </div>
+      </div>
+
+      <!-- Water Impact Summary -->
+      <div class="summary-card" style="background: white; border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h3 style="color: #2c5530; margin-bottom: 1rem; text-align: center;">Net Water Impact</h3>
+        <div id="totalSaved" style="text-align: center; font-size: 2rem; font-weight: bold; color: #4fc3f7;">
+          Loading...
+        </div>
+      </div>
+
+      <!-- Back to Home Button -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="/home" class="nav-button1" style="padding: 1rem 2rem; text-decoration: none; border-radius: 10px;">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <p>Created with 🩵 by Scrumpty Dumpty</p>
+    </div>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    // Fetch real user data
+    await createRealCharts();
+    
+    async function createRealCharts() {
+      try {
+        // Fetch user progress data
+        const progressResponse = await fetch('/api/user-progress');
+        const progressData = await progressResponse.json();
+        
+        // Fetch water level history
+        const historyResponse = await fetch('/api/water-level-history');
+        const historyData = await historyResponse.json();
+        
+        // Create Actions Chart with real data
+        createActionsChart(progressData.action_totals);
+        
+        // Create History Chart with real data
+        createHistoryChart(historyData.history);
+        
+        // Update total water saved
+        updateTotalWaterSaved(progressData.action_totals);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Fall back to empty charts if there's an error
+        createEmptyCharts();
+      }
+    }
+
+    function createActionsChart(actionTotals) {
+      const actionNames = Object.keys(actionTotals);
+      
+      // Separate refill and depletion actions
+      const refillActions = [];
+      const depletionActions = [];
+      
+      actionNames.forEach(name => {
+        const action = actionTotals[name];
+        if (action.count > 0) {
+          if (action.total_water > 0) {
+            refillActions.push({
+              name: name,
+              count: action.count,
+              water: action.total_water
+            });
+          } else if (action.total_water < 0) {
+            depletionActions.push({
+              name: name,
+              count: action.count,
+              water: Math.abs(action.total_water) // Make positive for display
+            });
+          }
+        }
+      });
+
+      // If no actions yet, show message
+      if (refillActions.length === 0 && depletionActions.length === 0) {
+        document.getElementById('actionsChart').innerHTML = 
+          '<div style="text-align: center; color: #666; padding: 2rem;">No actions completed yet. Start with some eco-friendly actions or try the chatbot!</div>';
+        return;
+      }
+
+      const traces = [];
+      
+      // Add refill actions trace (positive values)
+      if (refillActions.length > 0) {
+        traces.push({
+          x: refillActions.map(a => a.name),
+          y: refillActions.map(a => a.count),
+          type: 'bar',
+          name: 'Refill Actions',
+          marker: {
+            color: '#4caf50', // Green for positive actions
+            opacity: 0.8,
+            line: {
+              color: '#2c5530',
+              width: 1
+            }
+          },
+          text: refillActions.map(a => `${a.count} times<br>+${a.water.toFixed(1)}L`),
+          textposition: 'outside',
+          hovertemplate: '<b>%{x}</b><br>Count: %{y}<br>Water Saved: +%{customdata:.1f}L<extra></extra>',
+          customdata: refillActions.map(a => a.water)
+        });
+      }
+      
+      // Add depletion actions trace (negative values, but displayed positive)
+      if (depletionActions.length > 0) {
+        traces.push({
+          x: depletionActions.map(a => a.name),
+          y: depletionActions.map(a => a.count),
+          type: 'bar',
+          name: 'Depletion Actions',
+          marker: {
+            color: '#ff5722', // Red/orange for depletion actions
+            opacity: 0.8,
+            line: {
+              color: '#d32f2f',
+              width: 1
+            }
+          },
+          text: depletionActions.map(a => `${a.count} times<br>-${a.water.toFixed(1)}L`),
+          textposition: 'outside',
+          hovertemplate: '<b>%{x}</b><br>Count: %{y}<br>Water Used: -%{customdata:.1f}L<extra></extra>',
+          customdata: depletionActions.map(a => a.water)
+        });
+      }
+
+      const actionsLayout = {
+        xaxis: { 
+          title: 'Action Type',
+          tickangle: -45,
+          tickfont: { size: 10 }
+        },
+        yaxis: { 
+          title: 'Number of Times',
+          range: [0, Math.max(...refillActions.map(a => a.count), ...depletionActions.map(a => a.count)) * 1.2]
+        },
+        margin: { l: 60, r: 30, t: 60, b: 120 },
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        barmode: 'group',
+        legend: {
+          orientation: 'h',
+          x: 0.5,
+          xanchor: 'center',
+          y: 1.02,
+          yanchor: 'bottom'
+        }
+      };
+
+      Plotly.newPlot('actionsChart', traces, actionsLayout, { responsive: true });
+    }
+
+    function createHistoryChart(history) {
+      if (!history || history.length === 0) {
+        document.getElementById('historyChart').innerHTML = 
+          '<div style="text-align: center; color: #666; padding: 2rem;">No history yet. Complete some actions to see your progress!</div>';
+        return;
+      }
+
+      const timestamps = history.map(item => item.timestamp);
+      const waterLevels = history.map(item => item.water_level);
+      const actionNames = history.map(item => item.action);
+
+      const historyTrace = {
+        x: timestamps,
+        y: waterLevels,
+        type: 'scatter',
+        mode: 'lines+markers',
+        name: 'Water Level',
+        line: {
+          color: '#4fc3f7',
+          width: 4,
+          shape: 'spline'
+        },
+        marker: {
+          color: waterLevels.map(level => level > 70 ? '#4caf50' : level > 50 ? '#ff9800' : '#f44336'),
+          size: 10,
+          line: {
+            color: '#2c5530',
+            width: 2
+          }
+        },
+        text: actionNames,
+        hovertemplate: '<b>%{text}</b><br>Level: %{y}%<br>Time: %{x}<extra></extra>',
+        fill: 'tonexty',
+        fillcolor: 'rgba(79, 195, 247, 0.1)'
+      };
+
+      // Add a baseline at 0
+      const baselineTrace = {
+        x: timestamps,
+        y: Array(timestamps.length).fill(0),
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: 'transparent' },
+        showlegend: false,
+        hoverinfo: 'skip'
+      };
+
+      const historyLayout = {
+        xaxis: { 
+          title: 'Time',
+          tickangle: -45
+        },
+        yaxis: { 
+          title: 'Water Level (%)',
+          range: [0, 100],
+          gridcolor: 'rgba(0,0,0,0.1)'
+        },
+        margin: { l: 60, r: 30, t: 60, b: 100 },
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        paper_bgcolor: 'rgba(0,0,0,0)'
+      };
+
+      Plotly.newPlot('historyChart', [baselineTrace, historyTrace], historyLayout, { responsive: true });
+    }
+
+    function updateTotalWaterSaved(actionTotals) {
+      let totalWaterSaved = 0;
+      let totalWaterUsed = 0;
+      
+      Object.values(actionTotals).forEach(action => {
+        if (action.total_water > 0) {
+          totalWaterSaved += action.total_water;
+        } else if (action.total_water < 0) {
+          totalWaterUsed += Math.abs(action.total_water);
+        }
+      });
+      
+      const netWater = totalWaterSaved - totalWaterUsed;
+      const netText = netWater >= 0 ? `+${netWater.toFixed(1)}L` : `${netWater.toFixed(1)}L`;
+      const netColor = netWater >= 0 ? '#4caf50' : '#ff5722';
+      
+      document.getElementById('totalSaved').innerHTML = `
+        <div style="color: ${netColor};">${netText}</div>
+        <div style="font-size: 0.7em; color: #666; margin-top: 0.5rem;">
+          <span style="color: #4caf50;">+${totalWaterSaved.toFixed(1)}L saved</span> • 
+          <span style="color: #ff5722;">-${totalWaterUsed.toFixed(1)}L used</span>
+        </div>
+      `;
+    }
+
+    function createEmptyCharts() {
+      document.getElementById('actionsChart').innerHTML = 
+        '<div style="text-align: center; color: #666; padding: 2rem;">Loading your data...</div>';
+      document.getElementById('historyChart').innerHTML = 
+        '<div style="text-align: center; color: #666; padding: 2rem;">Loading your history...</div>';
+      document.getElementById('totalSaved').textContent = '0.0L';
+    }
+
+    // Add some animation to the charts
+    setTimeout(() => {
+      const elements = document.querySelectorAll('.chart-card, .status-card, .summary-card');
+      elements.forEach((el, index) => {
+        el.style.animation = `slideInUp 0.6s ease ${index * 0.2}s both`;
+      });
+    }, 300);
+  });
+  </script>
+
+  <style>
+  .progress-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .charts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  }
+
+  .status-card, .chart-card, .summary-card {
+    animation: slideInUp 0.6s ease;
+  }
+
+  .chart-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .summary-card {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .level-circle {
+    transition: all 0.5s ease;
+  }
+
+  .level-circle:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes pulse {
+    from {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    to {
+      box-shadow: 0 6px 25px rgba(79, 195, 247, 0.3);
+    }
+  }
+
+  .data-indicator {
+    background: linear-gradient(45deg, #4caf50, #81c784);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin: 0.5rem auto;
+    text-align: center;
+    max-width: 300px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+    }
+    to {
+      box-shadow: 0 4px 20px rgba(76, 175, 80, 0.6);
+    }
+  }
+  </style>
+</body>
+</html>
