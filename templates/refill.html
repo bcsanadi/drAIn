@@ -23,6 +23,7 @@
                 <h2>Explore your refill choices below and see how your good deeds help revive the water supply!y</h2>
                 
                 <div class="options-grid">
+                    <form method="POST" action="/refill">
                     <div class="option-card donate-card">
                         <div class="card-icon">💧</div>
                         <h3>Donate</h3>
@@ -64,9 +65,9 @@
                             </div>
                         </div>
                         
-                        <button class="refill-btn donate-btn" type="submit">
+                        <button class="refill-btn donate-btn">
                             <span class="btn-icon">💝</span>
-                            Refill via Donation
+                            Track Donation
                         </button>
                     </div>
 
@@ -77,50 +78,50 @@
                         <div class="eco-checklist">
                             <h4>Mark your recent eco-friendly actions:</h4>
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action1" value="short-shower">
+                                <input type="checkbox" name="short-shower" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Took a shower under 15 minutes</span>
                                 <span class="eco-impact">+2L saved</span>
                             </label>
                             
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action2" value="turn-off-water">
+                                <input type="checkbox" name="turn-off-water" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Turned off water while brushing teeth</span>
                                 <span class="eco-impact">+8L saved</span>
                             </label>
                             
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action3" value="broom-cleaning">
+                                <input type="checkbox" name="broom-cleaning" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Used a broom instead of hose for cleaning</span>
                                 <span class="eco-impact">+50L saved</span>
                             </label>
                             
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action4" value="full-loads">
+                                <input type="checkbox" name="full-loads" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Ran appliances only with full loads</span>
                                 <span class="eco-impact">+30L saved</span>
                             </label>
                             
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action5" value="fixed-leak">
+                                <input type="checkbox" name="fixed-leak" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Fixed a water leak</span>
                                 <span class="eco-impact">+100L saved</span>
                             </label>
                             
                             <label class="eco-item">
-                                <input type="checkbox" name="eco-action6" value="scrape-dishes">
+                                <input type="checkbox" name="scrape-dishes" value="1">
                                 <span class="eco-checkmark"></span>
                                 <span class="eco-text">Scraped dishes before dishwasher</span>
                                 <span class="eco-impact">+15L saved</span>
                             </label>
                         </div>
                         
-                        <button class="refill-btn eco-btn" type="submit">
-                            Refill via Eco Actions
+                        <button class="refill-btn eco-btn">
+                            Track Eco Actions
                         </button>
                     </div>
 
@@ -151,21 +152,29 @@
                         
                         <div class="learning-actions">
                             <label class="action-item">
-                                <input type="checkbox" name="shared-knowledge">
+                                <input type="checkbox" name="shared-knowledge" value="1">
                                 <span class="checkmark"></span>
                                 I shared this knowledge with someone
                             </label>
                             <label class="action-item">
-                                <input type="checkbox" name="read-article">
+                                <input type="checkbox" name="read-article" value="1">
                                 <span class="checkmark"></span>
                                 I read an educational article
                             </label>
                         </div>
                         
-                        <button class="refill-btn learn-btn" type="submit">
-                            Refill via Learning
+                        <button class="refill-btn learn-btn">
+                            Track Learning
                         </button>
                     </div>
+                    
+                    <!-- Main Submit Button -->
+                    <div style="grid-column: 1 / -1; text-align: center; margin-top: 2rem;">
+                        <button type="submit" class="main-refill-btn">
+                            💧 Refill My Water Supply 💧
+                        </button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </section>
