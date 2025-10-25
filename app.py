@@ -105,12 +105,12 @@ def refill():
         
         # Define water values for each eco action (in liters)
         eco_action_values = {
-            'short-shower': 2,
-            'turn-off-water': 8,
+            'short-shower': 5,
+            'turn-off-water': 1.5,
             'broom-cleaning': 50,
-            'full-loads': 30,
-            'fixed-leak': 100,
-            'scrape-dishes': 15
+            'full-loads': 3,
+            'fixed-leak': 1000,
+            'scrape-dishes': 9
         }
         
         # Check for eco actions
