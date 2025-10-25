@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify # type: ignore
+from flask_sqlalchemy import SQLAlchemy # type: ignore
+from werkzeug.security import generate_password_hash, check_password_hash # type: ignore
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Change this to a random secret key
