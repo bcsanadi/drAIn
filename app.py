@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, timezone
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify # type: ignore
 from flask_sqlalchemy import SQLAlchemy # type: ignore
 from werkzeug.security import generate_password_hash, check_password_hash # type: ignore
@@ -23,6 +24,9 @@ class User(db.Model):
     password_hash = db.Column(db.String(200), nullable=False)
     water_level = db.Column(db.Integer, default=50)  # Starting water level at 50%
     
+    # Relationship to user actions
+    actions = db.relationship('UserAction', backref='user', lazy=True, cascade='all, delete-orphan')
+    
     def set_password(self, password):
         """Hash and set the password"""
         self.password_hash = generate_password_hash(password)
@@ -43,6 +47,18 @@ class User(db.Model):
     
     def __repr__(self):
         return f'<User {self.username}>'
+
+class UserAction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    action_type = db.Column(db.String(50), nullable=False)  # 'eco', 'donation', 'learning', 'deplete'
+    action_name = db.Column(db.String(100), nullable=False)  # specific action like 'short-shower'
+    water_amount = db.Column(db.Float, nullable=False)  # liters saved/used
+    percentage_change = db.Column(db.Integer, nullable=False)  # percentage change in water level
+    timestamp = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    
+    def __repr__(self):
+        return f'<UserAction {self.action_name}: {self.water_amount}L>'
 
 # Home/Landing page route
 @app.route('/')
@@ -152,6 +168,53 @@ def refill():
             user.add_water(water_percentage_gain)
             new_level = user.water_level
             
+            # Record individual eco actions
+            for action, value in eco_action_values.items():
+                if request.form.get(action):
+                    action_record = UserAction(
+                        user_id=user.id,
+                        action_type='eco',
+                        action_name=action.replace('-', ' ').title(),
+                        water_amount=value,
+                        percentage_change=int(value * 0.5)
+                    )
+                    db.session.add(action_record)
+            
+            # Record donation if made
+            if donated == 'yes':
+                donation_record = UserAction(
+                    user_id=user.id,
+                    action_type='donation',
+                    action_name='Donation',
+                    water_amount=25,
+                    percentage_change=12
+                )
+                db.session.add(donation_record)
+            
+            # Record learning actions
+            if shared_knowledge:
+                learning_record = UserAction(
+                    user_id=user.id,
+                    action_type='learning',
+                    action_name='Shared Knowledge',
+                    water_amount=10,
+                    percentage_change=5
+                )
+                db.session.add(learning_record)
+            
+            if read_article:
+                learning_record = UserAction(
+                    user_id=user.id,
+                    action_type='learning',
+                    action_name='Read Article',
+                    water_amount=15,
+                    percentage_change=7
+                )
+                db.session.add(learning_record)
+            
+            # Commit all actions to database
+            db.session.commit()
+            
             # Create success message
             actions_text = f"You completed {len(eco_actions_completed)} eco actions" if eco_actions_completed else ""
             if donated == 'yes':
@@ -167,10 +230,128 @@ def refill():
     
     return render_template('refill.html')
 
+# Specific refill routes for different actions
+@app.route('/refill/eco', methods=['POST'])
+def refill_eco():
+    return refill()
+
+@app.route('/refill/learn', methods=['POST'])
+def refill_learn():
+    return refill()
+
+@app.route('/refill/donate', methods=['POST'])
+def refill_donate():
+    return refill()
+
 # Deplete page route
 @app.route('/deplete')
 def deplete():
     return render_template('deplete.html')
+
+# Progress page route - displays dynamic graphs
+@app.route('/progress')
+def progress():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    # Get the real user's water level
+    user = User.query.get(session['user_id'])
+    if not user:
+        return redirect(url_for('login'))
+    
+    return render_template('progress.html', water_level=user.water_level)
+
+# API route to get user progress data for graphs
+@app.route('/api/user-progress')
+def get_user_progress():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
+    
+    # Get all user actions
+    actions = UserAction.query.filter_by(user_id=user_id).all()
+    
+    # Calculate action totals
+    action_totals = {}
+    for action in actions:
+        action_name = action.action_name
+        if action_name not in action_totals:
+            action_totals[action_name] = {
+                'total_water': 0,
+                'total_percentage': 0,
+                'count': 0
+            }
+        
+        action_totals[action_name]['total_water'] += action.water_amount
+        action_totals[action_name]['total_percentage'] += action.percentage_change
+        action_totals[action_name]['count'] += 1
+    
+    # If no actions yet, provide an empty structure
+    if not action_totals:
+        action_totals = {
+            'Short Shower': {'total_water': 0, 'total_percentage': 0, 'count': 0},
+            'Turn Off Water': {'total_water': 0, 'total_percentage': 0, 'count': 0},
+            'Broom Cleaning': {'total_water': 0, 'total_percentage': 0, 'count': 0},
+            'Full Loads': {'total_water': 0, 'total_percentage': 0, 'count': 0},
+            'Fixed Leak': {'total_water': 0, 'total_percentage': 0, 'count': 0},
+            'Scrape Dishes': {'total_water': 0, 'total_percentage': 0, 'count': 0}
+        }
+    
+    return jsonify({'action_totals': action_totals})
+
+# API route to get water level history
+@app.route('/api/water-level-history')
+def get_water_level_history():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+    
+    # Get user actions ordered by timestamp
+    actions = UserAction.query.filter_by(user_id=user_id).order_by(UserAction.timestamp).all()
+    
+    # Build history working backwards from current actual level
+    # This ensures the graph ends at the correct current level
+    actual_level = user.water_level
+    
+    if not actions:
+        # No actions yet, just show current level
+        history = [{'timestamp': 'Current', 'water_level': actual_level, 'action': 'Current Level'}]
+    else:
+        # Calculate total change from actions
+        total_action_change = sum(action.percentage_change for action in actions)
+        
+        # Work backwards: if current level is X and total change is Y, starting level was X-Y
+        starting_level = actual_level - total_action_change
+        
+        # Build history starting from calculated starting level
+        history = [{'timestamp': 'Start', 'water_level': starting_level, 'action': 'Initial Level'}]
+        current_level = starting_level
+        
+        for action in actions:
+            current_level = min(100, max(0, current_level + action.percentage_change))
+            history.append({
+                'timestamp': action.timestamp.strftime('%m/%d %H:%M'),
+                'water_level': current_level,
+                'action': action.action_name
+            })
+        
+        # Ensure final level matches actual level (should be the case, but just in case)
+        if history[-1]['water_level'] != actual_level:
+            history[-1]['water_level'] = actual_level
+    
+    # Debug output to help track the issue
+    print(f"DEBUG History: User actual level: {actual_level}%, Action count: {len(actions)}, Final history level: {history[-1]['water_level']}%")
+    
+    return jsonify({
+        'history': history,
+        'current_level': user.water_level
+    })
 
 # API route for water level updates (for future use)
 @app.route('/api/water-level', methods=['POST'])
@@ -182,6 +363,71 @@ def update_water_level():
     # Here you could save to database or session
     # For now, just return success
     return jsonify({'status': 'success', 'action': action, 'amount': amount})
+
+# API route to track chatbot interactions and water depletion
+@app.route('/api/track-chatbot', methods=['POST'])
+def track_chatbot_interaction():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Not logged in'}), 401
+    
+    try:
+        data = request.get_json()
+        user_message = data.get('user_message', '')
+        bot_response = data.get('bot_response', '')
+        
+        # Calculate word count (user message + bot response)
+        user_words = len(user_message.split())
+        bot_words = len(bot_response.split())
+        total_words = user_words + bot_words
+        
+        # Calculate water depletion: 519 mL per 100 words
+        water_depleted_ml = (total_words / 100) * 519
+        water_depleted_liters = water_depleted_ml / 1000
+        
+        # Calculate percentage decrease - make it more impactful
+        # Use a more aggressive conversion: 1L = 2% for better game balance
+        # This means ~26 words (135mL) = 1% decrease
+        percentage_decrease = max(1, round(water_depleted_liters * 2))  # At least 1% per interaction
+        
+        print(f"DEBUG: Total words: {total_words}, User words: {user_words}, Bot words: {bot_words}")
+        print(f"DEBUG: Water depleted: {water_depleted_ml}mL ({water_depleted_liters:.3f}L), Percentage: {percentage_decrease}%")
+        
+        # Get user and update water level
+        user = User.query.get(session['user_id'])
+        if user:
+            old_level = user.water_level
+            print(f"DEBUG: User water level before: {old_level}%")
+            user.use_water(percentage_decrease)
+            new_level = user.water_level
+            print(f"DEBUG: User water level after: {new_level}%")
+            
+            # Record the depletion action
+            depletion_record = UserAction(
+                user_id=user.id,
+                action_type='deplete',
+                action_name='Chatbot Interaction',
+                water_amount=-water_depleted_liters,  # negative for depletion
+                percentage_change=-percentage_decrease  # negative for decrease
+            )
+            db.session.add(depletion_record)
+            db.session.commit()
+            
+            return jsonify({
+                'status': 'success',
+                'user_words': user_words,
+                'bot_words': bot_words,
+                'words_processed': total_words,
+                'water_depleted_ml': round(water_depleted_ml, 2),
+                'water_depleted_liters': round(water_depleted_liters, 3),
+                'percentage_decrease': percentage_decrease,
+                'old_water_level': old_level,
+                'new_water_level': new_level
+            })
+        else:
+            return jsonify({'error': 'User not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Route for signup form submission
 @app.route('/signup', methods=['POST'])
