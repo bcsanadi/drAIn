@@ -83,8 +83,10 @@ h1.title {
   text-decoration: none;
   padding: 0.5rem 1rem;
   border: 2px solid var(--dark-blue);
-  border-radius: 5px;
+  border-radius: 25px;
   transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
 }
 
 .nav-button2:hover {
@@ -97,6 +99,7 @@ h1.title {
 /* Body and general styling */
 html {
   background-color: white;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -114,11 +117,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  height: calc(80vh - 80px);
   padding: 2rem;
   background-color: var(--primary-color);
-  margin: 2rem;
-  border-radius: 10px;
+  margin: 0;
+  border-radius: 0;
 }
 
 .about-text {
@@ -145,7 +148,7 @@ body {
   text-decoration: none;
   padding: 0.5rem 1rem;
   border: 2px solid var(--dark-blue);
-  border-radius: 5px;
+  border-radius: 25px;
   transition: all 0.3s ease;
   display: inline-block;
   font-size: 1rem;
@@ -161,6 +164,57 @@ body {
 /* Main content area */
 header {
   flex: 1;
+}
+
+/* Simple bubble background for login page */
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, 
+    rgba(170, 227, 240, 0.3) 0%, 
+    rgba(194, 226, 239, 0.2) 40%, 
+    transparent 70%);
+}
+
+/* Individual bubble styling */
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9), rgba(92, 225, 230, 0.8), rgba(167, 221, 243, 0.6));
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 
+    inset 0 0 15px rgba(255, 255, 255, 0.8),
+    0 0 25px rgba(92, 225, 230, 0.5);
+  animation: bubbleRise linear forwards;
+  z-index: 1;
+}
+
+@keyframes bubbleRise {
+  0% {
+    opacity: 0.5;
+    transform: translateY(50px) translateX(0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20vh) translateX(calc(var(--drift, 0px) * 0.3)) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50vh) translateX(calc(var(--drift, 0px) * 0.6)) scale(1.1);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateY(-80vh) translateX(calc(var(--drift, 0px) * 0.9)) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) translateX(var(--drift, 0px)) scale(1);
+  }
 }
 
 /* Login page styling */
@@ -183,7 +237,6 @@ header {
   position: relative;
   overflow: hidden;
   animation: blob 8s ease-in-out infinite;
-  z-index: 10;
 }
 
 @keyframes blob {
@@ -268,7 +321,7 @@ header {
   font-weight: bold;
   padding: 0.65rem 1.9rem;
   border: none;
-  border-radius: 32px;
+  border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 0.8rem;
@@ -284,20 +337,70 @@ header {
 
 /* Sign Up button styling (nav-button1) */
 .nav-button1 {
-  color: var(--dark-blue);
+  background-color: var(--accent-color);
+  color: white;
   font-family: var(--font-family);
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border: 2px solid var(--dark-blue);
-  border-radius: 5px;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
   transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
 }
 
 .nav-button1:hover {
-  background-color: var(--dark-blue);
+  background: linear-gradient(180deg, #226214, #28a745);
+  border-color: #226214;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Deplete button specific styling */
+.nav-button2 {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.nav-button2:hover {
+  background: linear-gradient(180deg, #731919, #dc2626);
+  border-color: #731919;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Home page styling */
+.home-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(80vh - 80px);
+  padding: 2rem;
+  background-color: var(--primary-color);
+  margin: 0;
+  border-radius: 0;
+}
+
+.water-level-text {
+  text-align: center;
+  max-width: 600px;
+}
+
+.water-level-text h1 {
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+  font-size: 2.3rem;
+  font-feature-settings: "liga" 0;
 }
 
 /* Footer Styling */
@@ -320,4 +423,23 @@ footer {
   font-family: var(--font-family);
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Signup section styling */
+.signup-area {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--primary-color);
+}
+
+.signup-area h2 {
+  font-family: var(--title-font);
+  color: var(--dark-blue);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
