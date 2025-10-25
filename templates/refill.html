@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drAIn - Refill</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav class="nav-bar">
+    <div class="nav-container">
+        <div class="logo-text">drAIn</div>
+        <div class="nav-buttons">
+            <a href="/refill" class="nav-button1">Refill</a>
+            <a href="/deplete" class="nav-button2">Deplete</a>
+            <a href="/home" class="nav-button2">Home</a>
+        </div>
+    </div>    
+    </nav>
+    <header>
+        <section class="refill-section">
+            <div class="refill-container">
+                <h1>Refill Your Water Supply</h1>
+                <p class="refill-subtitle">Choose how you'd like to help restore the digital water balance through positive environmental actions!</p>
+                
+                <div class="options-grid">
+                    <div class="option-card donate-card">
+                        <div class="card-icon">💧</div>
+                        <h3>Donate to Water Conservation</h3>
+                        <p>Support organizations working to protect our water resources and reduce AI's environmental impact.</p>
+                        
+                        <div class="links-section">
+                            <h4>Recommended Organizations:</h4>
+                            <a href="https://www.embracerelief.org/the-hidden-thirst-of-technology-how-ai-is-consuming-millions-of-gallons-of-water/" class="resource-link" target="_blank">
+                                <span class="link-icon">🌍</span>
+                                Embrace Relief - Tech Water Crisis
+                            </a>
+                            <a href="https://ai4good.org/" class="resource-link" target="_blank">
+                                <span class="link-icon">🤖</span>
+                                AI4Good Foundation
+                            </a>
+                            <a href="https://theconservationfoundation.org/ai-for-conservation/" class="resource-link" target="_blank">
+                                <span class="link-icon">🌱</span>
+                                The Conservation Foundation
+                            </a>
+                            <a href="https://www.foodandwaterwatch.org/" class="resource-link" target="_blank">
+                                <span class="link-icon">🚰</span>
+                                Food and Water Watch
+                            </a>
+                        </div>
+                        
+                        <div class="input-section">
+                            <input type="url" class="custom-input" placeholder="Add your own donation link">
+                        </div>
+                        
+                        <div class="confirmation-section">
+                            <p class="confirmation-text">Did you make a donation?</p>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="radio" name="donated" value="yes">
+                                    <span class="checkmark"></span>
+                                    Yes, I donated!
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="radio" name="donated" value="no">
+                                    <span class="checkmark"></span>
+                                    Not today
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button class="refill-btn donate-btn" type="submit">
+                            <span class="btn-icon">💝</span>
+                            Refill via Donation
+                        </button>
+                    </div>
+
+                    <div class="option-card eco-card">
+                        <div class="card-icon">🌿</div>
+                        <h3>Personal Eco Actions</h3>
+                        <p>Track your water-saving actions and see how individual choices make a collective impact.</p>
+                        
+                        <div class="eco-checklist">
+                            <h4>Mark your recent eco-friendly actions:</h4>
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action1" value="short-shower">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Took a shower under 15 minutes</span>
+                                <span class="eco-impact">+2L saved</span>
+                            </label>
+                            
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action2" value="turn-off-water">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Turned off water while brushing teeth</span>
+                                <span class="eco-impact">+8L saved</span>
+                            </label>
+                            
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action3" value="broom-cleaning">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Used a broom instead of hose for cleaning</span>
+                                <span class="eco-impact">+50L saved</span>
+                            </label>
+                            
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action4" value="full-loads">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Ran appliances only with full loads</span>
+                                <span class="eco-impact">+30L saved</span>
+                            </label>
+                            
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action5" value="fixed-leak">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Fixed a water leak</span>
+                                <span class="eco-impact">+100L saved</span>
+                            </label>
+                            
+                            <label class="eco-item">
+                                <input type="checkbox" name="eco-action6" value="scrape-dishes">
+                                <span class="eco-checkmark"></span>
+                                <span class="eco-text">Scraped dishes before dishwasher</span>
+                                <span class="eco-impact">+15L saved</span>
+                            </label>
+                        </div>
+                        
+                        <button class="refill-btn eco-btn" type="submit">
+                            <span class="btn-icon">🌱</span>
+                            Refill via Eco Actions
+                        </button>
+                    </div>
+
+                    <div class="option-card learn-card">
+                        <div class="card-icon">📚</div>
+                        <h3>Learn & Educate</h3>
+                        <p>Expand your knowledge about AI's environmental impact and share awareness with others.</p>
+                        
+                        <div class="links-section">
+                            <h4>Educational Resources:</h4>
+                            <a href="https://lakeconews.com/news/82566-ai-has-a-hidden-water-cost-heres-how-to-calculate-yours" class="resource-link" target="_blank">
+                                <span class="link-icon">🔍</span>
+                                Calculate AI's Hidden Water Cost
+                            </a>
+                            <a href="https://www.eesi.org/articles/view/data-centers-and-water-consumption" class="resource-link" target="_blank">
+                                <span class="link-icon">🏢</span>
+                                Data Centers and Water Use
+                            </a>
+                            <a href="https://oecd.ai/en/wonk/how-much-water-does-ai-consume" class="resource-link" target="_blank">
+                                <span class="link-icon">📊</span>
+                                OECD: AI Water Consumption
+                            </a>
+                            <a href="https://www.businessenergyuk.com/knowledge-hub/chatgpt-energy-consumption-visualized/" class="resource-link" target="_blank">
+                                <span class="link-icon">⚡</span>
+                                ChatGPT Energy Visualization
+                            </a>
+                        </div>
+                        
+                        <div class="input-section">
+                            <input type="url" class="custom-input" placeholder="Share your own learning resource">
+                        </div>
+                        
+                        <div class="learning-actions">
+                            <label class="action-item">
+                                <input type="checkbox" name="shared-knowledge">
+                                <span class="checkmark"></span>
+                                I shared this knowledge with someone
+                            </label>
+                            <label class="action-item">
+                                <input type="checkbox" name="read-article">
+                                <span class="checkmark"></span>
+                                I read an educational article
+                            </label>
+                        </div>
+                        
+                        <button class="refill-btn learn-btn" type="submit">
+                            <span class="btn-icon">🧠</span>
+                            Refill via Learning
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Created with 🩵 by Scrumpty Dumpty</p>
+        </div>
+    </footer>
+
+    <script src="static/js/script.js"></script>
+</body>
+</html>
