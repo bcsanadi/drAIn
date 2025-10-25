@@ -94,6 +94,6 @@ if __name__ == "__main__":
         print("Visible models (first 15):", names)
     except Exception:
         pass
-    print("✅ Chatbot server running on http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+    print("✅ Chatbot server running on http://127.0.0.1:5003")
+    app.run(debug=True, port=5003)
 
