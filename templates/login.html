@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drAIn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="nav-bar">
+    <div class="nav-container">
+        <div class="logo-text">drAIn</div>
+        <div class="nav-buttons">
+            <!-- Sign Up Button -->
+            <a href="{{ url_for('index') }}#signup-area" class="nav-button2">Sign Up</a>
+        </div>
+    </div>    
+    </nav>
+    <header>
+        <section class="login-content">
+            <div class="login-box">
+                <h1>Welcome Back!</h1>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for message in messages %}
+                                <div class="alert">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <form id="login" method="POST" action="{{ url_for('login') }}">
+                    <div class="user-box">
+                        <input type="text" name="username" placeholder="Enter Username" required>
+                        <input type="password" name="password" placeholder="Enter Password" required>
+                        <button type="submit" class="get-started-button">Get Started</button>
+                    </div>     
+                </form>
+            </div>
+        </section>    
+    </header>
+    <footer>
+        <div class="footer-content">
+            <p>Created with 🩵 by Scrumpty Dumpty</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

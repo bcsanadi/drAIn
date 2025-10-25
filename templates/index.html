@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drAIn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="nav-bar">
+    <div class="nav-container">
+        <div class="logo-text">drAIn</div>
+        <div class="nav-buttons">
+            <a href="/login" class="nav-button2">Log In</a>
+        </div>
+    </div>    
+    </nav>
+    <header>
+        <section class="about-section">
+            <div class="about-text">
+                <h1>Welcome to drAIn</h1>
+                <p>Your personal AI assistant for all your needs. Sign up today to get started!</p>
+                <a href="#signup-area" class="get-started-button">Get Started</a>
+            </div>
+        </section>
+    </header>
+    <section class="signup-area" id="signup-area">
+        <h2>Sign Up</h2>
+        <form id="signup-form" method="POST" action="/signup">
+            <div class="user-box">
+                <input type="text" name="fullname" placeholder="Enter Full Name" required>
+                <input type="email" name="email" placeholder="Enter Email" required>
+                <input type="text" name="username" placeholder="Enter Username" required>
+                <input type="password" name="password" placeholder="Enter Password" required>
+                <button type="submit">H2-Go!</button>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <p>Created with 🩵 by Scrumpty Dumpty</p>
+        </div>
+    </footer>  
+</body>
+</html>
