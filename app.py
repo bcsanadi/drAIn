@@ -243,12 +243,15 @@ if __name__ == '__main__':
         # Check if we need to add water_level column to existing users
         try:
             # Check if the column exists by trying to query it
-            result = db.engine.execute(db.text("SELECT water_level FROM user LIMIT 1"))
+            with db.engine.connect() as conn:
+                conn.execute(db.text("SELECT water_level FROM user LIMIT 1"))
             print("Water level column already exists!")
         except Exception:
             # Column doesn't exist, add it
             try:
-                db.engine.execute(db.text("ALTER TABLE user ADD COLUMN water_level INTEGER DEFAULT 50"))
+                with db.engine.connect() as conn:
+                    conn.execute(db.text("ALTER TABLE user ADD COLUMN water_level INTEGER DEFAULT 50"))
+                    conn.commit()
                 print("Added water_level column to existing users!")
             except Exception as e:
                 print(f"Error adding column (might already exist): {e}")
