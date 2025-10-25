@@ -26,6 +26,15 @@
     </header>
     <section class="signup-area" id="signup-area">
         <h2>Sign Up</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
         <form id="signup-form" method="POST" action="/signup">
             <div class="user-box">
                 <input type="text" name="fullname" placeholder="Enter Full Name" required>
