@@ -1,0 +1,482 @@
+@font-face {
+  font-family: 'TAN MERINGUE';
+  src: url('./Fonts/TAN MERINGUE.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --primary-color: #aaebf5;
+  --secondary-color: #5ce1e6;
+  --accent-color: #0097b2;
+  --dark-blue: #003d52;
+  --sand-color: #cbac86;
+  --font-family: 'Helvetica Neue', sans-serif;
+  --title-font: 'TAN MERINGUE', 'Helvetica Neue', sans-serif;
+  --font-size: 16px;
+  --line-height: 1.5;
+}
+
+/* Title styling using custom font */
+.logo-text,
+h1,
+.site-title,
+.main-title,
+h1.title {
+  font-family: var(--title-font);
+}
+
+.tan-meringue-font {
+  font-family: var(--title-font);
+}
+
+
+.logo-text,
+h1,
+.site-title,
+.main-title,
+h1.title {
+  font-family: var(--title-font);
+}
+
+.tan-meringue-font {
+  font-family: var(--title-font);
+}
+
+/* Navbar Styling */
+.nav-bar {
+  background-color: var(--secondary-color);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  padding: 0 2rem;
+}
+
+.logo-text {
+  font-family: var(--title-font);
+  color: var(--dark-blue);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: .5rem;
+  margin-left: auto;
+  margin-right: 4rem;
+}
+
+/* Login button styling */
+.login-button {
+  color: var(--dark-blue);
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.login-button:hover {
+  background-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Signup button styling */
+.signup-button {
+  color: var(--dark-blue);
+  background-color: transparent;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.signup-button:hover {
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Refill button styling */
+.refill-button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.refill-button:hover {
+  background: linear-gradient(180deg, #226214, #28a745);
+  border-color: #226214;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Deplete button styling */
+.deplete-button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+}
+
+.deplete-button:hover {
+  background: linear-gradient(180deg, #731919, #dc2626);
+  border-color: #731919;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Body and general styling */
+html {
+  background-color: white;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-color);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content styling */
+.about-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(80vh - 80px);
+  padding: 2rem;
+  background-color: var(--primary-color);
+  margin: 0;
+  border-radius: 0;
+}
+
+.about-text {
+  text-align: center;
+  max-width: 600px;
+}
+
+.about-text h1 {
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.about-text p {
+  color: var(--dark-blue);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.get-started-button {
+  color: var(--dark-blue);
+  font-family: var(--font-family);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--dark-blue);
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  font-size: 1rem;
+}
+
+.get-started-button:hover {
+  background-color: var(--dark-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Main content area */
+header {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Simple bubble background for login page */
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, 
+    rgba(170, 227, 240, 0.3) 0%, 
+    rgba(194, 226, 239, 0.2) 40%, 
+    transparent 70%);
+}
+
+/* Individual bubble styling */
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9), rgba(92, 225, 230, 0.8), rgba(167, 221, 243, 0.6));
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 
+    inset 0 0 15px rgba(255, 255, 255, 0.8),
+    0 0 25px rgba(92, 225, 230, 0.5);
+  animation: bubbleRise linear forwards;
+  z-index: 1;
+}
+
+@keyframes bubbleRise {
+  0% {
+    opacity: 0.5;
+    transform: translateY(50px) translateX(0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20vh) translateX(calc(var(--drift, 0px) * 0.3)) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50vh) translateX(calc(var(--drift, 0px) * 0.6)) scale(1.1);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateY(-80vh) translateX(calc(var(--drift, 0px) * 0.9)) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) translateX(var(--drift, 0px)) scale(1);
+  }
+}
+
+/* Login page styling */
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.login-box {
+  background: linear-gradient(135deg, rgba(92, 225, 230, 0.8) 0%, rgba(167, 221, 243, 0.9) 50%, rgba(255, 255, 255, 0.95) 100%);
+  padding: 3.2rem 4rem;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  box-shadow: 0 8px 20px rgba(0, 151, 178, 0.3);
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: blob 8s ease-in-out infinite;
+}
+
+@keyframes blob {
+  0%, 100% { 
+    border-radius: 70% 30% 40% 60% / 70% 40% 60% 30%;
+    transform: rotate(0deg);
+  }
+  25% { 
+    border-radius: 40% 60% 70% 30% / 60% 70% 30% 40%;
+    transform: rotate(2deg);
+  }
+  50% { 
+    border-radius: 80% 20% 60% 40% / 50% 80% 20% 70%;
+    transform: rotate(-2deg);
+  }
+  75% { 
+    border-radius: 50% 50% 80% 20% / 80% 30% 70% 20%;
+    transform: rotate(1deg);
+  }
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(-20px, -20px) rotate(0deg); }
+  50% { transform: translate(20px, 20px) rotate(180deg); }
+}
+
+.login-box h1 {
+  color: var(--dark-blue);
+  margin-bottom: 1.6rem;
+  font-size: 1.9rem;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.user-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+}
+
+.user-box input {
+  padding: 0.8rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 5px;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 256px;
+  max-width: 100%;
+}
+
+.user-box input:focus {
+  border-color: var(--dark-blue);
+}
+
+.user-box input::placeholder {
+  color: #999;
+}
+
+.user-box button {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: var(--font-family);
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.65rem 1.9rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.8rem;
+  width: 152px;
+  max-width: 100%;
+}
+
+.user-box button:hover {
+  background-color: var(--dark-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ...existing code... */
+
+/* Home page styling */
+.home-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(80vh - 80px);
+  padding: 2rem;
+  background-color: transparent;
+  margin: 0;
+  border-radius: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.water-level-text {
+  text-align: center;
+  max-width: 600px;
+  position: relative;
+  z-index: 15;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.water-level-text h1 {
+  color: var(--dark-blue);
+  margin-bottom: 1rem;
+  font-size: 2.3rem;
+  font-feature-settings: "liga" 0;
+}
+
+/* Footer Styling */
+footer {
+  background-color : var(--sand-color);
+  padding: 1rem 0;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.footer-content p {
+  color: white;
+  font-family: var(--font-family);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Signup section styling */
+.signup-area {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--primary-color);
+}
+
+.signup-area h2 {
+  font-family: var(--title-font);
+  color: var(--dark-blue);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}

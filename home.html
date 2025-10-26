@@ -4,34 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>drAIn</title>
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/wave.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="wave.css">
 </head>
 <body>
     <nav class="nav-bar">
     <div class="nav-container">
-        <a href="/home" class="logo-text">drAIn</a>
+        <div class="logo-text">drAIn</div>
         <div class="nav-buttons">
-            <a href="/deplete" class="nav-button3">Deplete</a>
-            <a href="/refill" class="nav-button1">Refill</a>
-            <a href="/progress" class="nav-button2">Progress</a>
-            <a href="/logout" class="nav-button2">Logout</a>
+            <a href="refill.html" class="refill-button">Refill</a>
+            <a href="deplete.html" class="deplete-button">Deplete</a>
         </div>
     </div>    
     </nav>
     <header>
         <section class="home-section">
             <div class="water-level-text">
-                <h1>You have {{ water_level }} % of water left!</h1>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div class="flash-messages">
-                            {% for message in messages %}
-                                <div class="alert success-alert">{{ message }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endwith %}
+                <h1>You have 50% of water left!</h1>
             </div>
         </section>
         <!-- Waves positioned just below the header -->
@@ -49,13 +38,8 @@
                     <use xlink:href="#home-gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.3)" />
                 </g>
             </svg>
-            <!-- Solid color blocks to extend the ocean effect below the waves -->
-            <div class="ocean-layers">
-                <div class="ocean-layer" style="background-color: rgba(0,60,120,0.95); z-index: 4;"></div>
-                <div class="ocean-layer" style="background-color: rgba(0,100,180,0.7); z-index: 3;"></div>
-                <div class="ocean-layer" style="background-color: rgba(0,140,220,0.5); z-index: 2;"></div>
-                <div class="ocean-layer" style="background-color: rgba(255,255,255,0.3); z-index: 1;"></div>
-            </div>
+            <!-- Solid gradient block to extend the ocean effect below the waves -->
+            <div class="ocean-layers"></div>
         </div>    
     </header>
     <footer>
@@ -64,6 +48,5 @@
         </div>
     </footer>
     
-    <script src="static/js/script.js"></script>
 </body>
 </html>
