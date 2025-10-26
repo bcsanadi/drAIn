@@ -464,20 +464,23 @@ header {
   max-width: 600px;
   position: relative;
   z-index: 15;
-  background: rgba(255, 255, 255, 0.95);
+  background: transparent;
   padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  border: none;
 }
 
 .water-level-text h1 {
-  color: var(--dark-blue);
+  color: white;
   margin-bottom: 1rem;
-  font-size: 2.3rem;
+  font-size: 2.8rem;
   font-feature-settings: "liga" 0;
   font-family: var(--button-font);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 2px black;
+  paint-order: stroke fill;
 }
 
 /* Footer Styling */
@@ -530,22 +533,28 @@ footer {
 .alert {
   padding: 1rem 1.5rem;
   margin: 1rem auto;
-  border-radius: 10px;
+  border-radius: 0;
   max-width: 600px;
   font-family: var(--font-family);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  background: linear-gradient(135deg, rgba(160, 175, 251, 0.2), rgba(150, 246, 251, 0.299));
-  color: #c53030;
-  border: 2px solid #fed7d7;
-  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+  background: transparent;
+  color: white;
+  border: none;
+  box-shadow: none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 1.5px black;
+  paint-order: stroke fill;
 }
 
 .success-alert {
-  background: linear-gradient(135deg, rgba(116, 153, 246, 0.2), rgba(134, 186, 249, 0.3));
-  color: var(--dark-blue);
-  border: 2px solid var(--dark-blue);
-  box-shadow: 0 4px 12px rgba(134, 159, 203, 0.3);
+  background: transparent;
+  color: white;
+  border: none;
+  box-shadow: none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 1.5px black;
+  paint-order: stroke fill;
 }
 
 /* ===== REFILL PAGE STYLING ===== */
