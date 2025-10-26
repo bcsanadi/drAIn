@@ -1,8 +1,16 @@
 import os
 from datetime import datetime, timezone
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify # type: ignore
-from flask_sqlalchemy import SQLAlchemy # type: ignore
-from werkzeug.security import generate_password_hash, check_password_hash # type: ignore
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify  # type: ignore
+from flask_sqlalchemy import SQLAlchemy  # type: ignore
+from werkzeug.security import generate_password_hash, check_password_hash  # type: ignore
+
+# ⬇️ NEW: OpenAI client import + init
+from openai import OpenAI
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+oai_client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+MODEL_PRIMARY = "gpt-4o-mini"
+MODEL_FALLBACK = "gpt-4o"
+# ⬆️ END NEW
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev")
@@ -75,6 +83,33 @@ class UserAction(db.Model):
 # --- Ensure tables exist on Render (gunicorn import) ---
 with app.app_context():
     db.create_all()
+
+# ⬇️ NEW: Chatbot route (same origin)
+@app.post("/chat")
+def chat():
+    if oai_client is None:
+        return jsonify({"reply": "Server missing OPENAI_API_KEY."}), 500
+
+    data = request.get_json(force=True) or {}
+    history = data.get("messages", [])
+    user_msg = data.get("message", "")
+
+    convo = [{"role": "system", "content": "You are a friendly, concise website assistant."}]
+    convo.extend(history)
+    convo.append({"role": "user", "content": user_msg})
+
+    # Try primary, fall back once if needed
+    try:
+        r = oai_client.chat.completions.create(
+            model=MODEL_PRIMARY, messages=convo, max_tokens=150, temperature=0.7
+        )
+    except Exception:
+        r = oai_client.chat.completions.create(
+            model=MODEL_FALLBACK, messages=convo, max_tokens=150, temperature=0.7
+        )
+
+    return jsonify({"reply": r.choices[0].message.content})
+# ⬆️ END NEW
 
 # Home/Landing page route
 @app.route('/')
