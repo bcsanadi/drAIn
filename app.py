@@ -268,6 +268,13 @@ def deplete():
     
     return render_template('deplete.html', water_level=user.water_level)
 
+# Learn More page route - displays the impact comparison chart
+@app.route('/learn_more')
+def learn_more():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('learn_more.html')
+
 # Progress page route - displays dynamic graphs
 @app.route('/progress')
 def progress():

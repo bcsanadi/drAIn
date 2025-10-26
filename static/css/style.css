@@ -334,7 +334,7 @@ header {
 }
 
 /* Base navigation button styling - Inactive state */
-.nav-button1, .nav-button2, .nav-button3 {
+.deplete-nav-button, .learn-more-nav-button, .refill-nav-button, .progress-nav-button, .logout-nav-button {
   background-color: transparent;
   color: var(--dark-blue);
   font-family: var(--button-font);
@@ -347,26 +347,42 @@ header {
   text-align: center;
 }
 
-/* Default hover states - only show color when hovering inactive buttons */
-.nav-button1:hover {
-  background: linear-gradient(180deg, #226214, #28a745);
+/* Color-specific hover states - each button gets its designated color */
+.deplete-nav-button:hover {
+  background: linear-gradient(180deg, #731919, #dc2626); /* Red for deplete */
+  border-color: #731919;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.learn-more-nav-button:hover {
+  background: linear-gradient(180deg, #6366f1, #8b5cf6); /* Purple for learn more */
+  border-color: #6366f1;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.refill-nav-button:hover {
+  background: linear-gradient(180deg, #226214, #28a745); /* Green for refill */
   border-color: #226214;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.nav-button2:hover {
-  background: linear-gradient(180deg, #1e4d72, #2e6cb3);
+.progress-nav-button:hover {
+  background: linear-gradient(180deg, #1e4d72, #2e6cb3); /* Blue for progress */
   border-color: #1e4d72;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.nav-button3:hover {
-  background: linear-gradient(180deg, #731919, #dc2626);
-  border-color: #731919;
+.logout-nav-button:hover {
+  background: linear-gradient(180deg, #1e4d72, #2e6cb3); /* Blue for logout */
+  border-color: #1e4d72;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -390,8 +406,32 @@ header {
 }
 
 .refill-button:hover {
-  background: linear-gradient(180deg, #226214, #28a745);
-  border-color: #226214;
+  background: linear-gradient(180deg, #1a4d0f, #228b3b);
+  border-color: #1a4d0f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.learn-more-button {
+  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  border-color: #6366f1;
+  color: white !important;
+  font-family: var(--button-font);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 2px solid #6366f1;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  text-align: center;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.learn-more-button:hover {
+  background: linear-gradient(180deg, #4f46e5, #7c3aed);
+  border-color: #4f46e5;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -438,11 +478,11 @@ header {
 }
 
 .progress-button:hover {
-  background: linear-gradient(180deg, #1e4d72, #2e6cb3);
-  border-color: #1e4d72;
+  background: linear-gradient(180deg, #1a3f5e, #2563eb);
+  border-color: #1a3f5e;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(46, 108, 179, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Home page styling */
@@ -1103,28 +1143,6 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Refill button styling */
-.refill-button {
-  background-color: var(--accent-color);
-  color: white;
-  font-family: var(--button-font);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--accent-color);
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  min-width: 80px;
-  text-align: center;
-}
-
-.refill-button:hover {
-  background: linear-gradient(180deg, #226214, #28a745);
-  border-color: #226214;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 /* ===== CHATBOT/DEPLETE PAGE STYLING ===== */
 
 /* Override body styling for deplete page */
@@ -1473,8 +1491,8 @@ body:has(.chat-card) main {
 
 /* Depletion Notice Styling */
 .depletion-notice {
-  background: linear-gradient(135deg, rgba(92, 225, 230, 0.9) 0%, rgba(170, 235, 245, 0.95) 100%);
-  color: var(--dark-blue);
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+  color: #2c5530;
   padding: 1rem 1.5rem;
   border-radius: 15px;
   margin-bottom: 1rem;
