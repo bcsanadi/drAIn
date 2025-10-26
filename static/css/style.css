@@ -489,6 +489,8 @@ footer {
   padding: 1rem 0;
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 10;
 }
 
 .footer-content {
@@ -1475,4 +1477,43 @@ body:has(.chat-card) main {
   pointer-events: none;
   z-index: 7;
   box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+/* Depletion Notice Styling */
+.depletion-notice {
+  background: linear-gradient(135deg, rgba(92, 225, 230, 0.9) 0%, rgba(170, 235, 245, 0.95) 100%);
+  color: var(--dark-blue);
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  text-align: center;
+  max-width: 450px;
+  box-shadow: 
+    0 6px 24px rgba(0, 151, 178, 0.25),
+    0 2px 6px rgba(92, 225, 230, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 25;
+}
+
+.depletion-notice h4 {
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark-blue);
+}
+
+.depletion-notice p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-family: var(--font-family);
+  line-height: 1.5;
+  color: var(--dark-blue);
+}
+
+.depletion-notice strong {
+  font-weight: 700;
+  color: var(--accent-color);
 }
