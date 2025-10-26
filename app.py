@@ -25,6 +25,7 @@ db = SQLAlchemy(app)
 
 # User model
 class User(db.Model):
+    __tablename__ = "users"  # <-- necessary for Postgres (avoid reserved word)
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -57,8 +58,9 @@ class User(db.Model):
         return f'<User {self.username}>'
 
 class UserAction(db.Model):
+    __tablename__ = "user_actions"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # <-- match users.id
     action_type = db.Column(db.String(50), nullable=False)  # 'eco', 'donation', 'learning', 'deplete'
     action_name = db.Column(db.String(100), nullable=False)  # specific action like 'short-shower'
     water_amount = db.Column(db.Float, nullable=False)  # liters saved/used
@@ -67,6 +69,10 @@ class UserAction(db.Model):
     
     def __repr__(self):
         return f'<UserAction {self.action_name}: {self.water_amount}L>'
+
+# --- Ensure tables exist on Render (gunicorn import) ---
+with app.app_context():
+    db.create_all()
 
 # Home/Landing page route
 @app.route('/')
@@ -436,7 +442,7 @@ def track_chatbot_interaction():
             })
         else:
             return jsonify({'error': 'User not found'}), 404
-            
+                        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -501,13 +507,13 @@ if __name__ == '__main__':
         try:
             # Check if the column exists by trying to query it
             with db.engine.connect() as conn:
-                conn.execute(db.text("SELECT water_level FROM user LIMIT 1"))
+                conn.execute(db.text("SELECT water_level FROM users LIMIT 1"))  # <-- users
             print("Water level column already exists!")
         except Exception:
             # Column doesn't exist, add it
             try:
                 with db.engine.connect() as conn:
-                    conn.execute(db.text("ALTER TABLE user ADD COLUMN water_level INTEGER DEFAULT 50"))
+                    conn.execute(db.text("ALTER TABLE users ADD COLUMN water_level INTEGER DEFAULT 50"))  # <-- users
                     conn.commit()
                 print("Added water_level column to existing users!")
             except Exception as e:
