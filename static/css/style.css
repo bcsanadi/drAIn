@@ -357,8 +357,8 @@ header {
 }
 
 .learn-more-nav-button:hover {
-  background: linear-gradient(180deg, #6366f1, #8b5cf6); /* Purple for learn more */
-  border-color: #6366f1;
+  background: linear-gradient(180deg, #1e4d72, #2e6cb3); /* Blue for learn more */
+  border-color: #1e4d72;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -414,13 +414,13 @@ header {
 }
 
 .learn-more-button {
-  background: linear-gradient(180deg, #6366f1, #8b5cf6);
-  border-color: #6366f1;
+  background: linear-gradient(180deg, #1e4d72, #2e6cb3);
+  border-color: #1e4d72;
   color: white !important;
   font-family: var(--button-font);
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border: 2px solid #6366f1;
+  border: 2px solid #1e4d72;
   border-radius: 25px;
   transition: all 0.3s ease;
   min-width: 80px;
@@ -430,8 +430,8 @@ header {
 }
 
 .learn-more-button:hover {
-  background: linear-gradient(180deg, #4f46e5, #7c3aed);
-  border-color: #4f46e5;
+  background: linear-gradient(180deg, #1a3f5e, #2563eb);
+  border-color: #1a3f5e;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
