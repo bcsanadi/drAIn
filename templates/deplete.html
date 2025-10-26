@@ -37,11 +37,27 @@
         <a href="/progress" class="nav-button2">Progress</a>
         <a href="/logout" class="nav-button2">Logout</a>
       </div>
-    </div>    
-  </nav>
+    </div>    </nav>
+
+  <!-- Shared ocean waves - appears on all pages in the same position -->
+  <div class="home-waves">
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+      <defs>
+        <path id="home-gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+      </defs>
+      <g class="parallax">
+        <use xlink:href="#home-gentle-wave" x="48" y="0" fill="rgba(0,60,120,0.95)" />
+        <use xlink:href="#home-gentle-wave" x="48" y="3" fill="rgba(0,100,180,0.7)" />
+        <use xlink:href="#home-gentle-wave" x="48" y="5" fill="rgba(0,140,220,0.5)" />
+        <use xlink:href="#home-gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.3)" />
+      </g>
+    </svg>
+    <div class="ocean-layers"></div>
+  </div>
 
   <!-- Chatbot content -->
-  <main style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem;">
+  <main style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; position: relative;">
     <!-- Water depletion notice -->
     <div class="depletion-notice">
       <h4>AI Water Usage</h4>
@@ -61,24 +77,6 @@
       </form>
     </section>
   </main>
-
-  <!-- Waves (copied from home page) placed immediately above footer to match home behavior -->
-  <div class="home-waves">
-    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-      <defs>
-        <path id="home-gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-      </defs>
-      <g class="parallax">
-        <use xlink:href="#home-gentle-wave" x="48" y="0" fill="rgba(0,60,120,0.95)" />
-        <use xlink:href="#home-gentle-wave" x="48" y="3" fill="rgba(0,100,180,0.7)" />
-        <use xlink:href="#home-gentle-wave" x="48" y="5" fill="rgba(0,140,220,0.5)" />
-        <use xlink:href="#home-gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.3)" />
-      </g>
-    </svg>
-    <!-- Solid gradient block to extend the ocean effect below the waves -->
-    <div class="ocean-layers"></div>
-  </div>
 
   <!-- Footer -->
   <footer>
