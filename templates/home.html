@@ -21,7 +21,7 @@
     </nav>
     
     <!-- Shared ocean waves - appears on all pages in the same position -->
-    <div class="home-waves">
+    <div class="home-waves" id="home-waves-container" data-water-level="{{ water_level }}">
         <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
             <defs>
@@ -60,5 +60,46 @@
     </footer>
     
     <script src="static/js/script.js"></script>
+    <script>
+        // Dynamic water level positioning based on percentage
+        document.addEventListener('DOMContentLoaded', function() {
+            const wavesContainer = document.getElementById('home-waves-container');
+            const waterLevel = parseFloat(wavesContainer.getAttribute('data-water-level')) || 0;
+            
+            // Clamp water level between 0 and 100
+            const clampedLevel = Math.max(0, Math.min(100, waterLevel));
+            
+            // Calculate position based on percentage
+            // 100% = high water (top position = 100px)
+            // 0% = low water (bottom of screen)
+            const viewportHeight = window.innerHeight;
+            
+            // Position range
+            const fullWaterTop = 100; // Where waves are at 100%
+            const emptyWaterTop = viewportHeight - 150; // Where waves are at 0%
+            
+            // FIXED: Invert the formula so higher % = HIGHER (lower top value)
+            // At 100%: calculatedTop = 100 (top of screen)
+            // At 0%: calculatedTop = bottom of screen
+            const calculatedTop = fullWaterTop + ((100 - clampedLevel) / 100) * (emptyWaterTop - fullWaterTop);
+            
+            // Apply the calculated position with smooth transition
+            const waves = wavesContainer.querySelector('.waves');
+            const oceanLayers = wavesContainer.querySelector('.ocean-layers');
+            
+            if (waves && oceanLayers) {
+                waves.style.transition = 'top 1.5s ease-in-out';
+                oceanLayers.style.transition = 'top 1.5s ease-in-out';
+                
+                waves.style.top = calculatedTop + 'px';
+                
+                // Connect ocean layers directly below waves
+                // Use the wave's actual computed height for perfect connection
+                const waveRect = waves.getBoundingClientRect();
+                const waveHeight = waveRect.height || 80;
+                oceanLayers.style.top = (calculatedTop + waveHeight) + 'px';
+            }
+        });
+    </script>
 </body>
 </html>

@@ -246,7 +246,14 @@ def refill_donate():
 # Deplete page route
 @app.route('/deplete')
 def deplete():
-    return render_template('deplete.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user = User.query.get(session['user_id'])
+    if not user:
+        return redirect(url_for('login'))
+    
+    return render_template('deplete.html', water_level=user.water_level)
 
 # Progress page route - displays dynamic graphs
 @app.route('/progress')
@@ -384,10 +391,8 @@ def track_chatbot_interaction():
         water_depleted_ml = (total_words / 100) * 519
         water_depleted_liters = water_depleted_ml / 1000
         
-        # Calculate percentage decrease - make it more impactful
-        # Use a more aggressive conversion: 1L = 2% for better game balance
-        # This means ~26 words (135mL) = 1% decrease
-        percentage_decrease = max(1, round(water_depleted_liters * 2))  # At least 1% per interaction
+        # Fixed percentage decrease: 5% per chatbot interaction
+        percentage_decrease = 5
         
         print(f"DEBUG: Total words: {total_words}, User words: {user_words}, Bot words: {bot_words}")
         print(f"DEBUG: Water depleted: {water_depleted_ml}mL ({water_depleted_liters:.3f}L), Percentage: {percentage_decrease}%")

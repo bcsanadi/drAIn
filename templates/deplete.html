@@ -40,7 +40,7 @@
     </div>    </nav>
 
   <!-- Shared ocean waves - appears on all pages in the same position -->
-  <div class="home-waves">
+  <div class="home-waves" id="deplete-waves-container" data-water-level="{{ water_level }}">
     <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
       <defs>
@@ -97,6 +97,49 @@
 
     const history = [];
 
+    // Function to update water level visualization
+    function updateWaterLevel(newWaterLevel) {
+      const wavesContainer = document.getElementById('deplete-waves-container');
+      if (!wavesContainer) return;
+      
+      // Update data attribute
+      wavesContainer.setAttribute('data-water-level', newWaterLevel);
+      
+      // Clamp water level between 0 and 100
+      const clampedLevel = Math.max(0, Math.min(100, newWaterLevel));
+      
+      // Calculate position based on percentage
+      const viewportHeight = window.innerHeight;
+      const fullWaterTop = 100; // Where waves are at 100%
+      const emptyWaterTop = viewportHeight - 150; // Where waves are at 0%
+      
+      // Higher % = HIGHER (lower top value)
+      const calculatedTop = fullWaterTop + ((100 - clampedLevel) / 100) * (emptyWaterTop - fullWaterTop);
+      
+      // Apply the calculated position with smooth transition
+      const waves = wavesContainer.querySelector('.waves');
+      const oceanLayers = wavesContainer.querySelector('.ocean-layers');
+      
+      if (waves && oceanLayers) {
+        waves.style.transition = 'top 1.5s ease-in-out';
+        oceanLayers.style.transition = 'top 1.5s ease-in-out';
+        
+        waves.style.top = calculatedTop + 'px';
+        
+        // Connect ocean layers directly below waves
+        const waveRect = waves.getBoundingClientRect();
+        const waveHeight = waveRect.height || 80;
+        oceanLayers.style.top = (calculatedTop + waveHeight) + 'px';
+      }
+    }
+
+    // Initialize water level on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const wavesContainer = document.getElementById('deplete-waves-container');
+      const waterLevel = parseFloat(wavesContainer.getAttribute('data-water-level')) || 0;
+      updateWaterLevel(waterLevel);
+    });
+
     function addMessage(who, text) {
       const wrap = document.createElement("div");
       wrap.className = `msg ${who}`;
@@ -126,8 +169,9 @@
         
         if (response.ok) {
           const data = await response.json();
-          if (data.status === 'success') {
-            addWaterDepletionNotice(data);
+          if (data.status === 'success' && data.new_water_level !== undefined) {
+            // Update the water level visualization in real-time
+            updateWaterLevel(data.new_water_level);
           }
         }
       } catch (err) {
