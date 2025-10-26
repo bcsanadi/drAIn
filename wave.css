@@ -1,5 +1,51 @@
 
 
+/* Wave styles scoped to the home page */
+.home-waves {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home-waves .waves {
+  position: absolute;
+  top: 100px; /* Position waves below the header */
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 14vh;
+  margin-bottom: -2px;
+  min-height: 80px;
+  max-height: 180px;
+  line-height: 0;
+  pointer-events: none;
+}
+
+/* Ocean layer gradient that extends below the waves */
+.ocean-layers {
+  position: absolute;
+  top: calc(100px + 14vh); /* Start right below the waves */
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,140,220,0.5) 0%,
+    rgba(0,120,200,0.6) 20%,
+    rgba(0,100,180,0.7) 35%,
+    rgba(0,80,150,0.8) 50%,
+    rgba(0,70,135,0.85) 70%,
+    rgba(0,60,120,0.95) 100%
+  );
+}
+
 body {
   margin:0;
 }
@@ -63,6 +109,26 @@ p {
 
 /* Animation */
 
+.home-waves .parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.home-waves .parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.home-waves .parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.home-waves .parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.home-waves .parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
 .parallax > use {
   animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
 }
@@ -92,6 +158,16 @@ p {
 }
 /*Shrinking for mobile*/
 @media (max-width: 768px) {
+  .home-waves .waves {
+    top: 80px;
+    height: 40px;
+    min-height: 40px;
+  }
+  
+  .ocean-layers {
+    top: calc(80px + 40px);
+  }
+  
   .waves {
     height:40px;
     min-height:40px;
