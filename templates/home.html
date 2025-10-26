@@ -19,6 +19,24 @@
         </div>
     </div>    
     </nav>
+    
+    <!-- Shared ocean waves - appears on all pages in the same position -->
+    <div class="home-waves">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="home-gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use xlink:href="#home-gentle-wave" x="48" y="0" fill="rgba(0,60,120,0.95)" />
+                <use xlink:href="#home-gentle-wave" x="48" y="3" fill="rgba(0,100,180,0.7)" />
+                <use xlink:href="#home-gentle-wave" x="48" y="5" fill="rgba(0,140,220,0.5)" />
+                <use xlink:href="#home-gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.3)" />
+            </g>
+        </svg>
+        <div class="ocean-layers"></div>
+    </div>
+    
     <header>
         <section class="home-section">
             <div class="water-level-text">
@@ -34,29 +52,6 @@
                 {% endwith %}
             </div>
         </section>
-        <!-- Waves positioned just below the header -->
-        <div class="home-waves">
-            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                    <path id="home-gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                    <!-- darker blue on top, then lighter layers -->
-                    <use xlink:href="#home-gentle-wave" x="48" y="0" fill="rgba(0,60,120,0.95)" />
-                    <use xlink:href="#home-gentle-wave" x="48" y="3" fill="rgba(0,100,180,0.7)" />
-                    <use xlink:href="#home-gentle-wave" x="48" y="5" fill="rgba(0,140,220,0.5)" />
-                    <use xlink:href="#home-gentle-wave" x="48" y="7" fill="rgba(255,255,255,0.3)" />
-                </g>
-            </svg>
-            <!-- Solid color blocks to extend the ocean effect below the waves -->
-            <div class="ocean-layers">
-                <div class="ocean-layer" style="background-color: rgba(0,60,120,0.95); z-index: 4;"></div>
-                <div class="ocean-layer" style="background-color: rgba(0,100,180,0.7); z-index: 3;"></div>
-                <div class="ocean-layer" style="background-color: rgba(0,140,220,0.5); z-index: 2;"></div>
-                <div class="ocean-layer" style="background-color: rgba(255,255,255,0.3); z-index: 1;"></div>
-            </div>
-        </div>    
     </header>
     <footer>
         <div class="footer-content">
