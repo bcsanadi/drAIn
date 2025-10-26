@@ -11,9 +11,11 @@ app.secret_key = os.environ.get("SECRET_KEY", "dev")
 basedir = os.path.abspath(os.path.dirname(__file__))
 db_url = os.environ.get("DATABASE_URL")
 if db_url:
-    # Some providers still give postgres://; SQLAlchemy expects postgresql://
+    # Make sure we use the psycopg v3 driver
     if db_url.startswith("postgres://"):
-        db_url = db_url.replace("postgres://", "postgresql://", 1)
+        db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
+    elif db_url.startswith("postgresql://"):
+        db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{os.path.join(basedir, 'users.db')}"
