@@ -226,7 +226,7 @@ def refill():
         else:
             flash('Please select at least one action to refill your water supply!')
         
-        return redirect(url_for('home'))
+        return redirect(url_for('home', refilled='true', old_level=old_level))
     
     return render_template('refill.html')
 

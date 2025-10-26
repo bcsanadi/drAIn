@@ -66,38 +66,65 @@
             const wavesContainer = document.getElementById('home-waves-container');
             const waterLevel = parseFloat(wavesContainer.getAttribute('data-water-level')) || 0;
             
+            // Check if we just refilled (coming from refill page)
+            const urlParams = new URLSearchParams(window.location.search);
+            const justRefilled = urlParams.get('refilled') === 'true';
+            const oldLevel = parseFloat(urlParams.get('old_level'));
+            
             // Clamp water level between 0 and 100
             const clampedLevel = Math.max(0, Math.min(100, waterLevel));
             
             // Calculate position based on percentage
-            // 100% = high water (top position = 100px)
-            // 0% = low water (bottom of screen)
             const viewportHeight = window.innerHeight;
-            
-            // Position range
             const fullWaterTop = 100; // Where waves are at 100%
             const emptyWaterTop = viewportHeight - 150; // Where waves are at 0%
             
-            // FIXED: Invert the formula so higher % = HIGHER (lower top value)
-            // At 100%: calculatedTop = 100 (top of screen)
-            // At 0%: calculatedTop = bottom of screen
-            const calculatedTop = fullWaterTop + ((100 - clampedLevel) / 100) * (emptyWaterTop - fullWaterTop);
+            // Calculate final position
+            const finalTop = fullWaterTop + ((100 - clampedLevel) / 100) * (emptyWaterTop - fullWaterTop);
             
-            // Apply the calculated position with smooth transition
             const waves = wavesContainer.querySelector('.waves');
             const oceanLayers = wavesContainer.querySelector('.ocean-layers');
             
             if (waves && oceanLayers) {
-                waves.style.transition = 'top 1.5s ease-in-out';
-                oceanLayers.style.transition = 'top 1.5s ease-in-out';
+                // Get wave height for ocean layers positioning
+                const getWaveHeight = () => {
+                    const waveRect = waves.getBoundingClientRect();
+                    return waveRect.height || 80;
+                };
                 
-                waves.style.top = calculatedTop + 'px';
-                
-                // Connect ocean layers directly below waves
-                // Use the wave's actual computed height for perfect connection
-                const waveRect = waves.getBoundingClientRect();
-                const waveHeight = waveRect.height || 80;
-                oceanLayers.style.top = (calculatedTop + waveHeight) + 'px';
+                if (justRefilled && !isNaN(oldLevel) && oldLevel < clampedLevel) {
+                    // REFILL ANIMATION: Fill from bottom to top
+                    // Start at old level position
+                    const startTop = fullWaterTop + ((100 - oldLevel) / 100) * (emptyWaterTop - fullWaterTop);
+                    
+                    // Set initial position (old level) with no transition
+                    waves.style.transition = 'none';
+                    oceanLayers.style.transition = 'none';
+                    waves.style.top = startTop + 'px';
+                    oceanLayers.style.top = (startTop + getWaveHeight()) + 'px';
+                    
+                    // Force reflow to apply the position
+                    waves.offsetHeight;
+                    
+                    // Now animate to new level with transition
+                    setTimeout(() => {
+                        waves.style.transition = 'top 2s ease-in-out';
+                        oceanLayers.style.transition = 'top 2s ease-in-out';
+                        waves.style.top = finalTop + 'px';
+                        oceanLayers.style.top = (finalTop + getWaveHeight()) + 'px';
+                        
+                        // Clean up URL after animation starts
+                        if (window.history.replaceState) {
+                            window.history.replaceState({}, document.title, window.location.pathname);
+                        }
+                    }, 50);
+                } else {
+                    // Normal positioning (no animation or depletion)
+                    waves.style.transition = 'top 1.5s ease-in-out';
+                    oceanLayers.style.transition = 'top 1.5s ease-in-out';
+                    waves.style.top = finalTop + 'px';
+                    oceanLayers.style.top = (finalTop + getWaveHeight()) + 'px';
+                }
             }
         });
     </script>
