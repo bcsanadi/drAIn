@@ -167,6 +167,7 @@ def refill():
         if not user:
             return redirect(url_for('login'))
         
+        old_level = user.water_level  # Initialize old_level at the start
         total_water_saved = 0
         refill_type = ""
         
@@ -211,10 +212,10 @@ def refill():
                 refill_type = "learning"
         
         # Convert liters to percentage (assuming 1L = 0.5% for game balance)
-        water_percentage_gain = int(total_water_saved * 0.5)
+        # Use max(1, ...) to ensure at least 1% gain for any water saved
+        water_percentage_gain = max(1, int(total_water_saved * 0.5)) if total_water_saved > 0 else 0
         
         if water_percentage_gain > 0:
-            old_level = user.water_level
             user.add_water(water_percentage_gain)
             new_level = user.water_level
             
