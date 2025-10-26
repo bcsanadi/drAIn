@@ -676,14 +676,6 @@ footer {
   border-radius: 20px 20px 0 0;
 }
 
-.option-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 
-    0 20px 40px rgba(203, 172, 134, 0.25),
-    0 8px 16px rgba(203, 172, 134, 0.15);
-  border-color: var(--sand-color);
-}
-
 .donate-card::before {
   background: linear-gradient(90deg, var(--sand-color), #d4b896);
 }
