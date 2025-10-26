@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy # type: ignore
 from werkzeug.security import generate_password_hash, check_password_hash # type: ignore
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Change this to a random secret key
+app.secret_key = os.environ.get("SECRET_KEY", "dev")
 
 # Database configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
