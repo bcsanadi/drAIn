@@ -15,16 +15,15 @@
 <button onclick="updateAction('shower')">Take a Shorter Shower (+10)</button>
 <button onclick="updateAction('brush')">Turn Off Water While Brushing (+3)</button>
 <button onclick="updateAction('dishwasher')">Run Full Dishwasher/Laundry (+6)</button>
-<button onclick="updateAction('faucet')">Fix a Dripping Faucet (+1930)</button>
 <button onclick="updateAction('scrape')">Scrape Dishes Instead of Rinsing (+17)</button>
 
 <div id="chart" style="width:100%;height:500px;"></div>
 
 <script>
   // Initialize or load user data from localStorage
-  let actions = ["Shorter shower", "Brushed teeth", "Dishwasher", "Faucet leak", "Scraped dishes"];
-  let actionKeys = ["shower", "brush", "dishwasher", "faucet", "scrape"];
-  let defaultValues = [10, 3, 6, 1930, 17];
+  let actions = ["Shorter shower", "Brushed teeth", "Dishwasher", "Scraped dishes"];
+  let actionKeys = ["shower", "brush", "dishwasher", "scrape"];
+  let defaultValues = [10, 3, 6, 17];
 
   let userData = JSON.parse(localStorage.getItem("waterProgress")) || defaultValues.slice();
 

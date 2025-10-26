@@ -125,7 +125,6 @@ def refill():
             'turn-off-water': 1.5,
             'broom-cleaning': 50,
             'full-loads': 3,
-            'fixed-leak': 1000,
             'scrape-dishes': 9
         }
         
@@ -301,7 +300,6 @@ def get_user_progress():
             'Turn Off Water': {'total_water': 0, 'total_percentage': 0, 'count': 0},
             'Broom Cleaning': {'total_water': 0, 'total_percentage': 0, 'count': 0},
             'Full Loads': {'total_water': 0, 'total_percentage': 0, 'count': 0},
-            'Fixed Leak': {'total_water': 0, 'total_percentage': 0, 'count': 0},
             'Scrape Dishes': {'total_water': 0, 'total_percentage': 0, 'count': 0}
         }
     
@@ -510,3 +508,4 @@ if __name__ == '__main__':
         print("Database setup complete!")
     
     app.run(debug=True, host='0.0.0.0', port=5001)
+    #testing
