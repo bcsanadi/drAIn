@@ -91,19 +91,9 @@
       log.scrollTop = log.scrollHeight;
     }
 
-    function addWaterDepletionNotice(data) {
-      const wrap = document.createElement("div");
-      wrap.className = "msg system";
-      wrap.style.cssText = "margin: 0.5rem 0; opacity: 0.8;";
-      
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.style.cssText = "background: linear-gradient(45deg, #ff6b6b, #ffa726); color: white; font-size: 0.8rem; text-align: center;";
-      bubble.innerHTML = `💧 Water depleted: ${data.water_depleted_ml}mL<br>Words: ${data.user_words} (you) + ${data.bot_words} (AI) = ${data.words_processed} total<br>Level: ${data.old_water_level}% → ${data.new_water_level}% (-${data.percentage_decrease}%)`;
-      
-      wrap.appendChild(bubble);
-      log.appendChild(wrap);
-      log.scrollTop = log.scrollHeight;
+    function showWaterDepletion(data) {
+      // Water depletion message removed for cleaner chat experience
+      // The tracking still happens in the background
     }
 
     async function trackChatbotInteraction(userMessage, botResponse) {
